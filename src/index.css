@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-sys-bg text-black font-sans;
+    font-size: 17px;
+    min-height: 100dvh;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+  }
+
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+}
+
+@layer components {
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-primary text-white font-semibold
+           py-3.5 px-6 rounded-ios-xl
+           shadow-btn transition-all duration-150
+           active:scale-[0.96] active:brightness-95
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none
+           select-none;
+    font-size: 16px;
+  }
+
+  .btn-blue {
+    @apply inline-flex items-center justify-center gap-2
+           bg-apple-blue text-white font-semibold
+           py-3.5 px-6 rounded-ios-xl
+           shadow-btn-blue transition-all duration-150
+           active:scale-[0.96] active:brightness-95
+           disabled:opacity-40 disabled:cursor-not-allowed
+           select-none;
+    font-size: 16px;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2
+           text-apple-blue font-semibold
+           py-3.5 px-6 rounded-ios-xl
+           transition-all duration-150
+           active:bg-apple-blue-light active:scale-[0.96]
+           select-none;
+    font-size: 16px;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2
+           border-2 border-primary text-primary font-semibold
+           py-3.5 px-6 rounded-ios-xl
+           transition-all duration-150
+           active:bg-primary-light active:scale-[0.96]
+           disabled:opacity-40
+           select-none;
+    font-size: 16px;
+  }
+
+  .btn-destructive {
+    @apply inline-flex items-center justify-center gap-2
+           text-apple-red font-semibold
+           py-3.5 px-6 rounded-ios-xl
+           transition-all duration-150
+           active:bg-red-50 active:scale-[0.96]
+           select-none;
+    font-size: 16px;
+  }
+
+  /* ── Cards ── */
+  .card      { @apply bg-white rounded-ios-xl shadow-card p-4; }
+  .card-lg   { @apply bg-white rounded-ios-2xl shadow-card-md p-5; }
+  .card-inset{ @apply bg-sys-bg rounded-ios p-4; }
+
+  /* ── iOS grouped list ── */
+  .list-group { @apply bg-white rounded-ios-xl shadow-card overflow-hidden; }
+
+  .list-row {
+    @apply flex items-center gap-3 px-4 py-3.5
+           border-b border-sys-sep last:border-0
+           active:bg-sys-fill transition-colors duration-100
+           cursor-pointer select-none;
+  }
+
+  .list-icon {
+    @apply w-8 h-8 rounded-ios flex items-center justify-center
+           flex-shrink-0;
+    font-size: 14px;
+  }
+
+  /* ── Inputs ── */
+  .input-field {
+    @apply w-full bg-sys-fill rounded-ios px-4 py-3
+           text-black placeholder-sys-label3
+           border-0 outline-none ring-0
+           focus:bg-sys-fill2 focus:ring-2 focus:ring-primary/30
+           transition-all duration-150;
+    font-size: 16px;
+  }
+
+  .input-group { @apply bg-white rounded-ios-xl shadow-card overflow-hidden; }
+
+  .input-row {
+    @apply flex items-center gap-3 px-4 py-3.5
+           border-b border-sys-sep last:border-0;
+  }
+
+  /* ── Labels ── */
+  .label {
+    @apply font-semibold text-sys-label3 uppercase tracking-wide mb-1.5 block;
+    font-size: 13px;
+  }
+
+  .section-header {
+    @apply font-semibold text-sys-label3 uppercase tracking-wide
+           px-4 pt-5 pb-1.5;
+    font-size: 13px;
+  }
+
+  /* ── Pill / Badge ── */
+  .pill {
+    @apply inline-flex items-center gap-1 font-semibold
+           px-2.5 py-1 rounded-full;
+    font-size: 11px;
+  }
+
+  .pill-green  { @apply pill bg-primary-light text-primary-dark; }
+  .pill-blue   { @apply pill bg-apple-blue-light text-apple-blue; }
+  .pill-orange { @apply pill bg-orange-50 text-orange-600; }
+  .pill-red    { @apply pill bg-red-50 text-apple-red; }
+
+  /* ── Loading skeleton ── */
+  .skeleton {
+    @apply rounded-ios bg-gray-100 relative overflow-hidden;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.7) 50%, transparent 100%);
+    animation: shimmer 1.6s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .pb-safe { padding-bottom: max(88px, calc(72px + env(safe-area-inset-bottom))); }
+  .pt-nav  { padding-top: 56px; }
+
+  .glass {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  .glass-dark {
+    background: rgba(28,28,30,0.82);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #34C759, #007AFF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Apple-spec type scale as utilities */
+  .text-large-title { font-size: 34px; line-height: 41px; font-weight: 700; letter-spacing: -0.4px; }
+  .text-title-1     { font-size: 28px; line-height: 34px; font-weight: 700; letter-spacing: -0.3px; }
+  .text-title-2     { font-size: 22px; line-height: 28px; font-weight: 700; letter-spacing: -0.2px; }
+  .text-title-3     { font-size: 20px; line-height: 25px; font-weight: 600; }
+  .text-headline    { font-size: 17px; line-height: 22px; font-weight: 600; }
+  .text-body        { font-size: 17px; line-height: 22px; font-weight: 400; }
+  .text-callout     { font-size: 16px; line-height: 21px; font-weight: 400; }
+  .text-subhead     { font-size: 15px; line-height: 20px; font-weight: 400; }
+  .text-footnote    { font-size: 13px; line-height: 18px; font-weight: 400; }
+  .text-caption-1   { font-size: 12px; line-height: 16px; font-weight: 400; }
+  .text-caption-2   { font-size: 11px; line-height: 13px; font-weight: 400; }
+}
+
+/* ── Loader dots ── */
+.loader-dots span {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  margin: 0 3px;
+  animation: pulseDot 1.4s ease-in-out infinite;
+}
+.loader-dots span:nth-child(2) { animation-delay: 0.18s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.36s; }
+
+/* ── Page transition ── */
+.page { animation: slideUp 0.38s cubic-bezier(0.34,1.56,0.64,1) both; }

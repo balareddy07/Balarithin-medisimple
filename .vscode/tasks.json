@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "MediSimple: 1 Env check",
+      "type": "shell",
+      "command": "node --version; npm --version; supabase --version; vercel --version; ls .env 2>/dev/null && echo DOTENV_PRESENT || echo DOTENV_MISSING; grep -q '^ANTHROPIC_API_KEY=sk-ant' .env 2>/dev/null && echo ANTHROPIC_KEY_PRESENT || echo ANTHROPIC_KEY_MISSING; echo TASK_DONE_MARKER",
+      "options": { "cwd": "/Users/balarithindas/medisimple" },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MediSimple: 2 Install deps",
+      "type": "shell",
+      "command": "npm install 2>&1 | tee /tmp/ms-2-install.log; echo TASK_DONE_MARKER >> /tmp/ms-2-install.log",
+      "options": { "cwd": "/Users/balarithindas/medisimple" },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MediSimple: 3 Run tests",
+      "type": "shell",
+      "command": "npx vitest run 2>&1 | tee /tmp/ms-3-test.log; echo TASK_DONE_MARKER >> /tmp/ms-3-test.log",
+      "options": { "cwd": "/Users/balarithindas/medisimple" },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MediSimple: 4 Build",
+      "type": "shell",
+      "command": "npm run build 2>&1 | tee /tmp/ms-4-build.log; echo TASK_DONE_MARKER >> /tmp/ms-4-build.log",
+      "options": { "cwd": "/Users/balarithindas/medisimple" },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MediSimple: 5 Supabase db push",
+      "type": "shell",
+      "command": "supabase db push 2>&1 | tee /tmp/ms-5-push.log; echo TASK_DONE_MARKER >> /tmp/ms-5-push.log",
+      "options": { "cwd": "/Users/balarithindas/medisimple" },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MediSimple: 6 Deploy edge functions",
+      "type": "shell",
+      "command": "supabase functions deploy summarize 2>&1 | tee /tmp/ms-6-func.log; supabase functions deploy consult 2>&1 | tee -a /tmp/ms-6-func.log; echo TASK_DONE_MARKER >> /tmp/ms-6-func.log",
+      "options": { "cwd": "/Users/balarithindas/medisimple" },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MediSimple: 7 Set Anthropic secret",
+      "type": "shell",
+      "command": "supabase secrets set ANTHROPIC_API_KEY=$(grep '^ANTHROPIC_API_KEY=' .env | cut -d= -f2-) > /tmp/ms-7-secret.log 2>&1; echo \"exit=$?\" >> /tmp/ms-7-secret.log; echo TASK_DONE_MARKER >> /tmp/ms-7-secret.log",
+      "options": { "cwd": "/Users/balarithindas/medisimple" },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "problemMatcher": []
+    }
+  ]
+}

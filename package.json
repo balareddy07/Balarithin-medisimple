@@ -1,0 +1,37 @@
+{
+  "name": "medisimple",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "ms:env": "node --version; npm --version; supabase --version; vercel --version; ls .env 2>/dev/null && echo DOTENV_PRESENT || echo DOTENV_MISSING; grep -q '^ANTHROPIC_API_KEY=sk-ant' .env 2>/dev/null && echo ANTHROPIC_KEY_PRESENT || echo ANTHROPIC_KEY_MISSING",
+    "ms:install": "npm install 2>&1 | tee /tmp/ms-install.log; echo TASK_DONE_MARKER >> /tmp/ms-install.log",
+    "ms:test": "npx vitest run 2>&1 | tee /tmp/ms-test.log; echo TASK_DONE_MARKER >> /tmp/ms-test.log",
+    "ms:build": "npm run build 2>&1 | tee /tmp/ms-build.log; echo TASK_DONE_MARKER >> /tmp/ms-build.log",
+    "ms:push": "supabase db push 2>&1 | tee /tmp/ms-push.log; echo TASK_DONE_MARKER >> /tmp/ms-push.log",
+    "ms:funcs": "supabase functions deploy summarize 2>&1 | tee /tmp/ms-funcs.log; supabase functions deploy consult 2>&1 | tee -a /tmp/ms-funcs.log; echo TASK_DONE_MARKER >> /tmp/ms-funcs.log",
+    "ms:secret": "supabase secrets set ANTHROPIC_API_KEY=$(grep '^ANTHROPIC_API_KEY=' .env | cut -d= -f2-) > /tmp/ms-secret.log 2>&1; echo done >> /tmp/ms-secret.log; echo TASK_DONE_MARKER >> /tmp/ms-secret.log"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.43.4",
+    "@vercel/analytics": "^1.3.1",
+    "lucide-react": "^0.383.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.23.1",
+    "vercel": "^60.1.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.2.13",
+    "vitest": "^1.6.0"
+  }
+}
