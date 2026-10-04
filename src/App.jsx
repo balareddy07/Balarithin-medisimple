@@ -8,6 +8,7 @@ import Home            from './pages/Home'
 import UploadReport    from './pages/UploadReport'
 import AISummary       from './pages/AISummary'
 import MyReports       from './pages/MyReports'
+import AskReports      from './pages/AskReports'
 import FamilyDashboard from './pages/FamilyDashboard'
 import DoctorShare     from './pages/DoctorShare'
 import DoctorView      from './pages/DoctorView'
@@ -70,6 +71,7 @@ function AppLayout() {
           <Route path="/upload"         element={<UploadReport />} />
           <Route path="/summary"        element={<AISummary />} />
           <Route path="/my-reports"     element={<MyReports />} />
+          <Route path="/ask-reports"    element={<AskReports />} />
           <Route path="/family"         element={<FamilyDashboard />} />
           <Route path="/doctor-share"   element={<DoctorShare />} />
           <Route path="/share/:token"   element={<DoctorView />} />

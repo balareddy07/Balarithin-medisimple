@@ -105,6 +105,16 @@ export default function MyReports() {
           </Link>
         </div>
 
+        {/* Ask my reports */}
+        {!loading && reports.length > 0 && (
+          <Link
+            to="/ask-reports"
+            className="btn-primary w-full py-3.5 text-headline mb-4 flex items-center justify-center gap-2"
+          >
+            <span>💬</span> Ask my reports
+          </Link>
+        )}
+
         {/* Search */}
         {reports.length > 2 && (
           <div className="relative mb-4">

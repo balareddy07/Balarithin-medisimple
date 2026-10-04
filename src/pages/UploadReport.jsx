@@ -172,6 +172,24 @@ export default function UploadReport() {
       metrics: extracted_metrics.length,
       medications: extracted_medications.length,
     })
+
+    // Ask-my-reports RAG: index the plaintext for semantic search.
+    // Fire-and-forget — the UI never waits on it. Only real pasted/typed
+    // text is indexed (file/image placeholders start with "[").
+    if (report?.id && content && !content.startsWith('[') && content.trim().length > 50) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (!session?.access_token) return
+        fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ingest-report`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({ reportId: report.id, content: content.slice(0, 30000) }),
+        }).catch(() => {})
+      })
+    }
+
     navigate('/summary', { state: { summary, language, patientName: patientName || profile?.name, reportId: report?.id } })
   }
 

@@ -12,7 +12,7 @@
     "ms:test": "npx vitest run 2>&1 | tee /tmp/ms-test.log; echo TASK_DONE_MARKER >> /tmp/ms-test.log",
     "ms:build": "npm run build 2>&1 | tee /tmp/ms-build.log; echo TASK_DONE_MARKER >> /tmp/ms-build.log",
     "ms:push": "supabase db push 2>&1 | tee /tmp/ms-push.log; echo TASK_DONE_MARKER >> /tmp/ms-push.log",
-    "ms:funcs": "supabase functions deploy summarize 2>&1 | tee /tmp/ms-funcs.log; supabase functions deploy consult 2>&1 | tee -a /tmp/ms-funcs.log; echo TASK_DONE_MARKER >> /tmp/ms-funcs.log",
+    "ms:funcs": "for f in summarize consult ingest-report ask-reports; do supabase functions deploy $f 2>&1 | tee -a /tmp/ms-funcs.log; done; echo TASK_DONE_MARKER >> /tmp/ms-funcs.log",
     "ms:secret": "supabase secrets set ANTHROPIC_API_KEY=$(grep '^ANTHROPIC_API_KEY=' .env | cut -d= -f2-) > /tmp/ms-secret.log 2>&1; echo done >> /tmp/ms-secret.log; echo TASK_DONE_MARKER >> /tmp/ms-secret.log"
   },
   "dependencies": {
