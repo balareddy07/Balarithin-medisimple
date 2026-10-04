@@ -10,7 +10,7 @@ create extension if not exists vector;
 -- Chunks are embedded with all-MiniLM-L6-v2 (384 dims) at ingest time
 -- by the ingest-report edge function.
 create table if not exists report_chunks (
-  id           uuid primary key default uuid_generate_v4(),
+  id           uuid primary key default gen_random_uuid(),
   report_id    uuid references reports(id) on delete cascade not null,
   user_id      uuid references profiles(id) on delete cascade not null,
   chunk_index  integer not null,
