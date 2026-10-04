@@ -8,8 +8,10 @@
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
-import { pipeline } from 'npm:@huggingface/transformers@3.5.0'
 import { buildAnswerPrompt, toVectorLiteral } from '../_shared/rag.ts'
+
+// NOTE: Transformers.js is imported at RUNTIME via esm.sh, not bundled —
+// the npm bundle (~100MB) exceeds Supabase's function deploy size limit.
 
 const ALLOWED_ORIGINS = [
   'https://medisimple-neon.vercel.app',
@@ -44,7 +46,10 @@ const LANG_NAMES: Record<string, string> = {
 let extractorPromise: Promise<any> | null = null
 function getExtractor(): Promise<any> {
   if (!extractorPromise) {
-    extractorPromise = pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2')
+    extractorPromise = (async () => {
+      const { pipeline } = await import('https://esm.sh/@huggingface/transformers@3.5.0')
+      return pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2')
+    })()
   }
   return extractorPromise
 }
