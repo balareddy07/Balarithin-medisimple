@@ -1,33 +1,13 @@
-# dependencies
-node_modules/
-
-# build output
-dist/
-dist-ssr/
-
-# env & secrets
+node_modules
+dist
+.output
+.vinxi
+.tanstack
+.grok
 .env
-.env.local
-.env.*.local
-
-# logs
+.env.*
+!.env.example
 *.log
-npm-debug.log*
-
-# vercel
-.vercel
-
-# supabase cli
-.branches
-.temp
-
-# OS / editor
 .DS_Store
-Thumbs.db
-.vscode/*
-!.vscode/tasks.json
-.idea/
-
-# test coverage
-coverage/
-.claude/
+artifacts
+screenshots
